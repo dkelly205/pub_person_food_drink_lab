@@ -33,10 +33,14 @@ class Customer
   end
 
   def food_bought(food)
-    @drunkeness_level -= food.rejuvenation_level
+    if @wallet >= food.price()
     @wallet -= food.price
-    
-    return @wallet >= food.price()
+    end
+  end
+
+  def food_eat(food)
+    @drunkeness_level += food.rejuvenation_level
+
   end
 
 

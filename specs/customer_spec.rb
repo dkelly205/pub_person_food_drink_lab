@@ -12,7 +12,7 @@ class CustomerTest < MiniTest::Test
     @customer = Customer.new("Frank", 100.00, 25)
     @customer2 = Customer.new("Bill", 0.99, 25)
     @pub = Pub.new("The Boozer", 500.00)
-    @food = Food.new("Crisps", 1.00, 2)
+    @food = Food.new("Crisps", 1.00, -2)
   end
 
   def test_has_name
@@ -67,12 +67,15 @@ class CustomerTest < MiniTest::Test
   end
 
   def test_food_bought
-    assert_equal(true, @customer.food_bought(@food))
+    assert_equal(99.0, @customer.food_bought(@food))
   end
 
-  def test_drunkeness_decreases_by_rejuvenation_level
-    @customer.buy_drink(@pub.drink_sold(drink), @pub)
+  def test_food_eat
+    drink1 = Drink.new("beer", 2.99, 5)
+    @pub.add_drink(drink1)
+    @customer.buy_drink(@pub.drink_sold(drink1), @pub)
     @customer.food_bought(@food)
+    @customer.food_eat(@food)
     assert_equal(3, @customer.drunkeness_level)
   end
 
